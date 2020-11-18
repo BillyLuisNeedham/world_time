@@ -7,14 +7,15 @@ class WorldTime {
   String time; // the time in that location
   String flag; // url to an asset flag icon
   String url; // location url for api end point
+  bool isDayTime; // true if daytime
 
   WorldTime({this.location, this.flag, this.url});
 
   Future<void> getTime() async {
-
     try {
       // make the request
-      Response response = await get('https://worldtimeapi.org/api/timezone/$url');
+      Response response =
+          await get('https://worldtimeapi.org/api/timezone/$url');
       Map data = jsonDecode(response.body);
       // print(data);
 
@@ -29,12 +30,11 @@ class WorldTime {
       now = now.add(Duration(hours: int.parse(offset)));
 
       // set time property
+      isDayTime = now.hour > 6 && now.hour < 20 ? true : false;
       time = DateFormat.jm().format(now);
-    }
-    catch(e) {
+    } catch (e) {
       print('caught error: $e');
       time = 'could not get time data';
     }
-
   }
 }
