@@ -35,6 +35,7 @@ class WorldTime {
     } catch (e) {
       print('caught error: $e');
       time = 'could not get time data';
+      isDayTime = false;
     }
   }
 }
